@@ -9,6 +9,9 @@ pub struct LogicCircuitWindow {
     video_subsystem: VideoSubsystem,
     canvas: Canvas<Window>,
     event_pump: EventPump,
+
+    last_lmb_down_point: Point,
+    field_offset: Point,
 }
 
 impl LogicCircuitWindow {
@@ -28,18 +31,20 @@ impl LogicCircuitWindow {
         canvas.clear();
         canvas.present();
 
+        let last_lmb_down_point = Point::new(0, 0);
+        let field_offset = Point::new(0, 0);
+
         Ok(LogicCircuitWindow {
             sdl_context,
             video_subsystem,
             canvas,
             event_pump,
+            last_lmb_down_point,
+            field_offset,
         })
     }
 
     pub fn run_main_loop(&mut self) {
-        let mut last_lmb_down = Point::new(0, 0);
-        let mut field_offset = Point::new(0, 0);
-
         'running: loop {
             for event in self.event_pump.poll_iter() {
                 match event {
@@ -53,14 +58,15 @@ impl LogicCircuitWindow {
                         x,
                         y,
                         ..
-                    } => last_lmb_down = Point::new(x, y),
+                    } => self.last_lmb_down_point = Point::new(x, y),
                     Event::MouseButtonUp {
                         mouse_btn: MouseButton::Left,
                         x,
                         y,
                         ..
                     } => {
-                        field_offset += last_lmb_down - Point::new(x, y);
+                        self.field_offset +=
+                            self.last_lmb_down_point - Point::new(x, y);
                     }
                     _ => {}
                 }
