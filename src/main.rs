@@ -1,5 +1,7 @@
 use sdl2::event::Event;
+use sdl2::mouse::MouseButton;
 use sdl2::pixels::Color;
+use sdl2::rect::Point;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::{EventPump, VideoSubsystem};
@@ -37,6 +39,9 @@ fn create_empty_window() -> Result<SDLContext, Box<dyn Error>> {
 }
 
 fn run_main_loop(event_pump: &mut EventPump) {
+    let mut last_lmb_down = Point::new(0, 0);
+    let mut field_offset = Point::new(0, 0);
+
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {
@@ -45,6 +50,20 @@ fn run_main_loop(event_pump: &mut EventPump) {
                     keycode: Some(sdl2::keyboard::Keycode::Escape),
                     ..
                 } => break 'running,
+                Event::MouseButtonDown {
+                    mouse_btn: MouseButton::Left,
+                    x,
+                    y,
+                    ..
+                } => last_lmb_down = Point::new(x, y),
+                Event::MouseButtonUp {
+                    mouse_btn: MouseButton::Left,
+                    x,
+                    y,
+                    ..
+                } => {
+                    field_offset += last_lmb_down - Point::new(x, y);
+                }
                 _ => {}
             }
         }
@@ -55,8 +74,6 @@ fn run_main_loop(event_pump: &mut EventPump) {
 fn main() -> Result<(), Box<dyn Error>> {
     let mut sdl_context = create_empty_window()?;
     run_main_loop(&mut sdl_context.event_pump);
-
-    // sdl_context is dropped here, which calls SDL_Quit()
 
     Ok(())
 }
