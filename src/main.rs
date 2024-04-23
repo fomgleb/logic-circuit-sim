@@ -7,14 +7,14 @@ use sdl2::video::Window;
 use sdl2::{EventPump, VideoSubsystem};
 use std::error::Error;
 
-struct SDLContext {
+struct LogicCircuitWindow {
     sdl_context: sdl2::Sdl,
     video_subsystem: VideoSubsystem,
     canvas: Canvas<Window>,
     event_pump: EventPump,
 }
 
-fn create_empty_window() -> Result<SDLContext, Box<dyn Error>> {
+fn create_empty_window() -> Result<LogicCircuitWindow, Box<dyn Error>> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
 
@@ -30,7 +30,7 @@ fn create_empty_window() -> Result<SDLContext, Box<dyn Error>> {
     canvas.clear();
     canvas.present();
 
-    Ok(SDLContext {
+    Ok(LogicCircuitWindow {
         sdl_context,
         video_subsystem,
         canvas,
@@ -72,8 +72,8 @@ fn run_main_loop(event_pump: &mut EventPump) {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut sdl_context = create_empty_window()?;
-    run_main_loop(&mut sdl_context.event_pump);
+    let mut logic_circuit_window = create_empty_window()?;
+    run_main_loop(&mut logic_circuit_window.event_pump);
 
     Ok(())
 }
