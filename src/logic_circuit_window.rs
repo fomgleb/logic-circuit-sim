@@ -66,7 +66,7 @@ impl LogicCircuitWindow {
                         ..
                     } => {
                         self.field_offset +=
-                            self.last_lmb_down_point - Point::new(x, y);
+                            self.last_lmb_down_point.offset(-x, -y);
                     }
                     _ => {}
                 }
