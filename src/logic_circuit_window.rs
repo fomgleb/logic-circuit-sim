@@ -4,6 +4,9 @@ use sdl2::{
 };
 use std::error::Error;
 
+const WINDOW_WIDTH: u32 = 800;
+const WINDOW_HEIGHT: u32 = 600;
+
 pub struct LogicCircuitWindow {
     sdl_context: sdl2::Sdl,
     video_subsystem: VideoSubsystem,
@@ -20,7 +23,7 @@ impl LogicCircuitWindow {
         let video_subsystem = sdl_context.video()?;
 
         let window = video_subsystem
-            .window("window", 800, 600)
+            .window("window", WINDOW_WIDTH, WINDOW_HEIGHT)
             .position_centered()
             .build()?;
 
