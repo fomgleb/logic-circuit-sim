@@ -87,7 +87,7 @@ impl LogicCircuitWindow {
         Ok(())
     }
 
-    pub fn run_main_loop(&mut self) {
+    pub fn run_main_loop(&mut self) -> Result<(), Box<dyn Error>> {
         'running: loop {
             for event in self.event_pump.poll_iter() {
                 match event {
@@ -127,7 +127,7 @@ impl LogicCircuitWindow {
             if self.field_offset_is_changing {
                 self.canvas.set_draw_color(Color::RGB(255, 255, 255));
                 self.canvas.clear();
-                self.render_grid();
+                self.render_grid()?;
                 self.canvas.present();
             }
 
@@ -139,5 +139,7 @@ impl LogicCircuitWindow {
 
             std::thread::sleep(std::time::Duration::from_secs_f32(1.0 / 60.0));
         }
+
+        Ok(())
     }
 }

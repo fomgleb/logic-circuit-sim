@@ -5,7 +5,7 @@ use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut logic_circuit_window = LogicCircuitWindow::new()?;
-    logic_circuit_window.run_main_loop();
+    logic_circuit_window.run_main_loop()?;
 
     Ok(())
 }
