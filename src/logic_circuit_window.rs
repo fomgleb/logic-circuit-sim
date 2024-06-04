@@ -40,17 +40,14 @@ impl LogicCircuitWindow {
         canvas.clear();
         canvas.present();
 
-        let last_lmb_down_point = Point::new(0, 0);
-        let field_offset = Point::new(0, 0);
-
         Ok(LogicCircuitWindow {
             sdl_context,
             video_subsystem,
             canvas,
             event_pump,
             renderer,
-            last_lmb_down_point,
-            field_offset,
+            last_lmb_down_point: Point::new(0, 0),
+            field_offset: Point::new(0, 0),
             field_offset_is_changing: false,
         })
     }
