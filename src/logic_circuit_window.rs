@@ -73,8 +73,6 @@ impl LogicCircuitWindow {
                     }
                     Event::MouseButtonUp {
                         mouse_btn: MouseButton::Left,
-                        x,
-                        y,
                         ..
                     } => {
                         self.field_offset_is_changing = false;
