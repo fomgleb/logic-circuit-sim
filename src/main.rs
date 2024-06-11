@@ -2,6 +2,7 @@ mod logic_circuit_window;
 mod renderer;
 mod renderable;
 mod grid;
+mod drawable_box;
 
 use logic_circuit_window::LogicCircuitWindow;
 use std::error::Error;
