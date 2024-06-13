@@ -4,6 +4,7 @@ mod renderable;
 mod grid;
 mod drawable_box;
 mod resolution;
+mod rect_coords;
 
 use logic_circuit_window::LogicCircuitWindow;
 use std::error::Error;
