@@ -3,6 +3,7 @@ mod renderer;
 mod renderable;
 mod grid;
 mod drawable_box;
+mod resolution;
 
 use logic_circuit_window::LogicCircuitWindow;
 use std::error::Error;
