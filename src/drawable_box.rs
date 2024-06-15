@@ -1,4 +1,6 @@
-use crate::renderable::Renderable;
+use crate::{
+    rect_coords::RectCoords, renderable::Renderable, resolution::Resolution,
+};
 use sdl2::{
     rect::{Point, Rect},
     render::Canvas,
@@ -48,18 +50,49 @@ impl Renderable for DrawableBox {
         field_offset: Point,
     ) -> Result<(), Box<dyn Error>> {
         let (window_width, window_height) = canvas.window().size();
-        let mut drawing_rect = self.rect;
-        drawing_rect.x -= field_offset.x;
-        drawing_rect.y -= field_offset.y;
+
+        self.render_with_resolution(
+            canvas,
+            field_offset,
+            Resolution::new(window_width as u16, window_height as u16),
+        )
+    }
+
+    fn render_with_resolution(
+        &self,
+        canvas: &mut Canvas<Window>,
+        field_offset: Point,
+        resolution: Resolution,
+    ) -> Result<(), Box<dyn Error>> {
+        let rendering_area = {
+            let (window_width, window_height) = canvas.output_size()?;
+            let x = (window_width as u16 - resolution.width) / 2;
+            let y = (window_height as u16 - resolution.height) / 2;
+
+            RectCoords {
+                left_x: x,
+                top_y: y,
+                right_x: resolution.width + x,
+                bottom_y: resolution.height + y,
+            }
+        };
+
+        let drawing_rect = Rect::new(
+            self.rect.x - field_offset.x,
+            self.rect.y - field_offset.y,
+            self.rect.width(),
+            self.rect.height(),
+        );
 
         // Check if the rectangle is within the bounds of the window.
-        if drawing_rect.x + drawing_rect.w as i32 >= 0
-            && drawing_rect.y + drawing_rect.h as i32 >= 0
-            && drawing_rect.x <= window_width as i32
-            && drawing_rect.y <= window_height as i32
+        if drawing_rect.x + drawing_rect.w >= rendering_area.left_x as i32
+            && drawing_rect.y + drawing_rect.h >= rendering_area.top_y as i32
+            && drawing_rect.x <= rendering_area.right_x as i32
+            && drawing_rect.y <= rendering_area.bottom_y as i32
         {
             canvas.fill_rect(drawing_rect)?;
         }
+
         Ok(())
     }
 }
