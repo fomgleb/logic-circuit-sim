@@ -1,4 +1,7 @@
-use crate::{grid::Grid, renderer::Renderer};
+use crate::{
+    drawable_box::DrawableBox, grid::Grid, renderer::Renderer,
+    resolution::Resolution,
+};
 use sdl2::{
     event::Event, mouse::MouseButton, pixels::Color, rect::Point,
     render::Canvas, video::Window, EventPump, VideoSubsystem,
@@ -49,10 +52,14 @@ impl LogicCircuitWindow {
             last_lmb_down_point: Point::new(0, 0),
             field_offset: Point::new(0, 0),
             field_offset_is_changing: false,
+            scale: 1,
         })
     }
 
-    pub fn run_main_loop(&mut self) -> Result<(), Box<dyn Error>> {
+    pub fn run_main_loop(
+        &mut self,
+        resolution: Resolution,
+    ) -> Result<(), Box<dyn Error>> {
         'running: loop {
             for event in self.event_pump.poll_iter() {
                 match event {
@@ -90,8 +97,11 @@ impl LogicCircuitWindow {
             if self.field_offset_is_changing {
                 self.canvas.set_draw_color(Color::RGB(255, 255, 255));
                 self.canvas.clear();
-                self.renderer
-                    .render_everything(&mut self.canvas, self.field_offset)?;
+                self.renderer.render_everything_with_resolution(
+                    &mut self.canvas,
+                    self.field_offset,
+                    resolution,
+                )?;
                 self.canvas.present();
             }
 
