@@ -5,8 +5,8 @@ use sdl2::{
 };
 use std::error::Error;
 
-const WINDOW_WIDTH: u32 = 800;
-const WINDOW_HEIGHT: u32 = 600;
+const WINDOW_WIDTH: u32 = 1200;
+const WINDOW_HEIGHT: u32 = 800;
 
 pub struct LogicCircuitWindow {
     sdl_context: sdl2::Sdl,
