@@ -1,10 +1,10 @@
-mod logic_circuit_window;
-mod renderer;
-mod renderable;
-mod grid;
 mod drawable_box;
-mod resolution;
+mod grid;
+mod logic_circuit_window;
 mod rect_coords;
+mod renderable;
+mod renderer;
+mod resolution;
 
 use logic_circuit_window::LogicCircuitWindow;
 use std::error::Error;
