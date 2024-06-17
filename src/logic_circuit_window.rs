@@ -38,6 +38,47 @@ impl LogicCircuitWindow {
 
         let mut renderer = Renderer::new();
         renderer.renderables.push_back(Box::new(Grid));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(0, 0, 50, 300)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(-50, 0, 150, 50)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(150, 0, 50, 300)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(150, 125, 100, 50)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(150, 250, 100, 50)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(150, 0, 100, 50)));
+
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(300, 125, 100, 50)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(300, 250, 100, 50)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(300, 0, 100, 50)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(270, 15, 50, 150)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(370, 135, 50, 150)));
+
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(500, 0, 50, 300)));
+        renderer
+            .renderables
+            .push_back(Box::new(DrawableBox::new(450, 0, 150, 50)));
 
         canvas.set_draw_color(Color::RGB(255, 255, 255));
         canvas.clear();
