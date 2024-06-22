@@ -93,7 +93,6 @@ impl LogicCircuitWindow {
             last_lmb_down_point: Point::new(0, 0),
             field_offset: Point::new(0, 0),
             field_offset_is_changing: false,
-            scale: 1,
         })
     }
 
